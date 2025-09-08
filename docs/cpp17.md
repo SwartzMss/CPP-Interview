@@ -1,3 +1,8 @@
+---
+layout: default
+title: C++17
+---
+
 # C++17 Features and Interview Questions
 
 ## Key Features
