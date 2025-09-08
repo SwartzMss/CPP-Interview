@@ -1,0 +1,8 @@
+site_name: CPP Interview Guide
+nav:
+  - Home: index.md
+  - C++11: cpp11.md
+  - C++14: cpp14.md
+  - C++17: cpp17.md
+theme:
+  name: material
