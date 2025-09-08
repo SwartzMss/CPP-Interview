@@ -7,4 +7,7 @@ nav:
   - C++14: cpp14.md
   - C++17: cpp17.md
 theme:
-  name: material
+  name: readthedocs
+
+extra_css:
+  - stylesheets/extra.css
