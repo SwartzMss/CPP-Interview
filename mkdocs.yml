@@ -3,9 +3,6 @@ site_url: https://SwartzMss.github.io/CPP-Interview/
 site_description: C++ 面试
 nav:
   - Home: index.md
-  - C++11: cpp11.md
-  - C++14: cpp14.md
-  - C++17: cpp17.md
 theme:
   name: readthedocs
 
