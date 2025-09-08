@@ -1,4 +1,6 @@
-site_name: CPP Interview Guide
+site_name: CPP-Interview
+site_url: https://SwartzMss.github.io/CPP-Interview/
+site_description: C++ 面试
 nav:
   - Home: index.md
   - C++11: cpp11.md
