@@ -1,3 +1,8 @@
+---
+layout: default
+title: C++14
+---
+
 # C++14 Features and Interview Questions
 
 ## Key Features

@@ -1,3 +1,8 @@
+---
+layout: default
+title: C++11
+---
+
 # C++11 Features and Interview Questions
 
 ## Key Features
