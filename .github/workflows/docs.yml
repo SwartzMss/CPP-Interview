@@ -4,10 +4,10 @@ name: Deploy Docs
 on:
   push:
     branches:
-      - work
+      - main
   pull_request:
     branches:
-      - work
+      - main
 
 jobs:
   build-and-deploy:
