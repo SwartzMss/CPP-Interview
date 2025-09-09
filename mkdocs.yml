@@ -6,6 +6,7 @@ nav:
   - STL:
     - vector对象到底是在堆上还是栈上？: stl/vector_memory.md
     - vector中push_back和emplace_back的区别？: stl/push_back_vs_emplace_back.md
+    - make_shared 和 shared_ptr(new T) 的区别？: stl/make_shared_vs_shared_ptr.md
 theme:
   name: readthedocs
 
