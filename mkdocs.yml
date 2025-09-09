@@ -13,7 +13,6 @@ nav:
     - C++ 四种类型转换？: type_conversion.md
 theme:
   name: readthedocs
-  collapse_navigation: true
 
 extra_css:
   - stylesheets/extra.css
