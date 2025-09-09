@@ -5,6 +5,7 @@ nav:
   - Home: index.md
   - STL:
     - vector对象到底是在堆上还是栈上？: stl/vector_memory.md
+    - vector中push_back和emplace_back的区别？: stl/push_back_vs_emplace_back.md
 theme:
   name: readthedocs
 
