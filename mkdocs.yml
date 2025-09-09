@@ -11,6 +11,7 @@ nav:
     - 如何设计一个只能在堆上创建对象的类？: oop/heap_only_class.md
 theme:
   name: readthedocs
+  collapse_navigation: true
 
 extra_css:
   - stylesheets/extra.css
