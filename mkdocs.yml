@@ -14,11 +14,6 @@ nav:
   - 特性:
       - language/index.md
       - "C++ 四种类型转换？": language/type_conversion.md
-theme:
-  name: material
-  features:
-    - navigation.sections
-    - navigation.indexes
 
 extra_css:
   - stylesheets/extra.css
