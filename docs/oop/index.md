@@ -6,5 +6,5 @@ title: 面向对象
 
 以下是 C++ 面向对象相关的面试题：
 
-- [如何设计一个只能在堆上创建对象的类？](oop/heap_only_class.md)
+- [如何设计一个只能在堆上创建对象的类？](heap_only_class.md)
 
