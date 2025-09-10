@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/language/explicit/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/language/type_conversion/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/oop/heap_only_class/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/stl/make_shared_vs_shared_ptr/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/stl/push_back_vs_emplace_back/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+    <url>
+         <loc>https://SwartzMss.github.io/CPP-Interview/stl/vector_memory/</loc>
+         <lastmod>2025-09-10</lastmod>
+    </url>
+</urlset>
