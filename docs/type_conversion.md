@@ -109,7 +109,7 @@ try {
 }
 ```
 
-> `dynamic_cast` 依赖多态类型的 RTTI，仅适用于带虚函数的类。
+> `dynamic_cast` 依赖多态类型的 RTTI，仅适用于带虚函数的类；若类中没有虚函数，使用 `dynamic_cast` 会在编译期报错。
 
 ## `const_cast`
 
