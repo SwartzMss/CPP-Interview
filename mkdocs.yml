@@ -1,6 +1,24 @@
 site_name: CPP-Interview
 site_url: https://SwartzMss.github.io/CPP-Interview/
 site_description: C++ 面试
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到夜间模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到日间模式
+  features:
+    - navigation.top
+    - content.code.copy
 nav:
   - 首页: index.md
   - STL:
