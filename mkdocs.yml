@@ -2,20 +2,23 @@ site_name: CPP-Interview
 site_url: https://SwartzMss.github.io/CPP-Interview/
 site_description: C++ 面试
 nav:
-  - Home: index.md
+  - 首页: index.md
   - STL:
-    - 概述: stl/index.md
-    - "vector对象到底是在堆上还是栈上？": stl/vector_memory.md
-    - "vector中push_back和emplace_back的区别？": stl/push_back_vs_emplace_back.md
-    - "make_shared 和 shared_ptr(new T) 的区别？": stl/make_shared_vs_shared_ptr.md
+      - stl/index.md
+      - "vector对象到底是在堆上还是栈上？": stl/vector_memory.md
+      - "vector中push_back和emplace_back的区别？": stl/push_back_vs_emplace_back.md
+      - "make_shared 和 shared_ptr(new T) 的区别？": stl/make_shared_vs_shared_ptr.md
   - 面向对象:
-    - 概述: oop/index.md
-    - "如何设计一个只能在堆上创建对象的类？": oop/heap_only_class.md
+      - oop/index.md
+      - "如何设计一个只能在堆上创建对象的类？": oop/heap_only_class.md
   - 特性:
-    - 概述: language/index.md
-    - "C++ 四种类型转换？": language/type_conversion.md
+      - language/index.md
+      - "C++ 四种类型转换？": language/type_conversion.md
 theme:
-  name: readthedocs
+  name: material
+  features:
+    - navigation.sections
+    - navigation.indexes
 
 extra_css:
   - stylesheets/extra.css
