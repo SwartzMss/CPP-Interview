@@ -29,6 +29,7 @@ nav:
       - "如何设计一个只能在堆上创建对象的类？": oop/heap_only_class.md
   - 特性:
       - "C++ 四种类型转换？": language/type_conversion.md
+      - "explicit 关键字的作用？": language/explicit.md
 
 extra_css:
   - stylesheets/extra.css
