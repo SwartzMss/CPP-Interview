@@ -102,3 +102,42 @@ QMetaObject::invokeMethod(window, "updateStatus",
 - 大对象结果避免频繁拷贝：传 `QSharedPointer`、轻量结构，或仅传索引/句柄。
 - QML/Qt Quick 同理：只在 GUI 线程触碰 QML 对象；用信号/`invokeMethod` 切回。
 
+### 7) 与“信号槽连接类型”的关系与重负载槽处理
+
+- 交叉阅读：更系统的连接类型说明与坑位，可参见《[Qt 信号槽机制与连接类型？](signals_and_slots.md)》。
+- 重负载槽不要用 `DirectConnection`（或同线程下的 `Auto` 会退化为 Direct），否则会在发射点同步执行并阻塞（可能是 UI 线程）。
+- 建议：
+  - 把重活放到 `Worker`（子线程）里执行；结果再通过信号回到 UI 线程。
+  - 或显式使用 `Qt::QueuedConnection`，让调用异步化，避免阻塞发射线程。
+  - 需要等待结果时再考虑 `Qt::BlockingQueuedConnection`，谨慎避免死锁。
+
+示例：`QtConcurrent` + `QFutureWatcher` 下放计算，完成后在 UI 线程更新。
+
+```cpp
+#include <QtConcurrent>
+#include <QFutureWatcher>
+
+auto task = [] {
+    // heavy work...
+    return QString("result");
+};
+
+QFuture<QString> future = QtConcurrent::run(task);
+auto* watcher = new QFutureWatcher<QString>(parent);
+
+QObject::connect(watcher, &QFutureWatcher<QString>::finished, ui, [=]{
+    // QFutureWatcher 的信号在其所在线程（通常是 GUI 线程）发出
+    ui->label->setText(watcher->future().result());
+    watcher->deleteLater();
+});
+
+watcher->setFuture(future);
+```
+
+示例：同线程但希望避免一次长阻塞，可用队列连接或 0ms 定时切片处理。
+
+```cpp
+QObject::connect(obj, &Obj::sig, obj, &Obj::slot, Qt::QueuedConnection);
+// 或
+QTimer::singleShot(0, obj, [obj]{ obj->slot(); });
+```
