@@ -26,6 +26,7 @@ jobs:
           pip install mkdocs mkdocs-material
 
       - name: Deploy to GitHub Pages
+        if: github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mkdocs gh-deploy --force
