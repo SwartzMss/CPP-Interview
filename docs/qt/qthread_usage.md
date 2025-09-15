@@ -12,11 +12,15 @@ tags:
 
 ### 1) 两种用法与推荐
 
-- 推荐：Worker 对象 + `moveToThread()`
-  - 将纯业务的 `QObject`（Worker）移动到子线程；通过信号把任务投递给 Worker，通过信号把结果发回 UI。
-  - 优点：复用事件循环、便于跨线程通信、资源生命周期清晰。
-- 继承 QThread（仅在需要自定义 `run()` 或无事件循环的专用线程时）
-  - 例如在 `run()` 中执行阻塞循环或设置自定义事件循环；但不要在 `QThread` 子类中放业务槽/对象。
+#### 推荐：Worker 对象 + `moveToThread()`
+
+- 将纯业务的 `QObject`（Worker）移动到子线程；通过信号把任务投递给 Worker，通过信号把结果发回 UI。
+- 优点：复用事件循环、便于跨线程通信、资源生命周期清晰。
+
+#### 少数场景：继承 QThread（自定义 `run()`/专用线程）
+
+- 在 `run()` 中执行阻塞循环或设置自定义事件循环等特殊需求。
+- 不要在 `QThread` 子类中放业务槽/对象；业务对象应为独立 `QObject` 并放入目标线程。
 
 结论：绝大多数场景使用 Worker + `moveToThread()` 即可。
 
@@ -122,4 +126,3 @@ class LooperThread : public QThread {
 - 《[跨线程更新 UI 的安全方式？](cross_thread_ui_update.md)》
 - 《[Qt 连接类型详解](connection_types.md)》
 - 《[信号槽常见坑与最佳实践](pitfalls_best_practices.md)》
-
