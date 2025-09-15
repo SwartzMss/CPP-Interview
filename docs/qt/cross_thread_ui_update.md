@@ -105,6 +105,7 @@ QMetaObject::invokeMethod(window, "updateStatus",
 ### 7) 与“信号槽连接类型”的关系与重负载槽处理
 
 - 交叉阅读：更系统的连接类型说明与坑位，可参见《[Qt 信号槽机制与连接类型？](signals_and_slots.md)》。
+- Direct 不等于“同线程”：`Qt::DirectConnection` 始终在“发射线程”同步执行，即使接收者属于其他线程也不会迁移到接收者线程；因此可能越线程访问接收者对象（UI/QObject），风险很高。
 - 重负载槽不要用 `DirectConnection`（或同线程下的 `Auto` 会退化为 Direct），否则会在发射点同步执行并阻塞（可能是 UI 线程）。
 - 建议：
   - 把重活放到 `Worker`（子线程）里执行；结果再通过信号回到 UI 线程。
@@ -140,4 +141,19 @@ watcher->setFuture(future);
 QObject::connect(obj, &Obj::sig, obj, &Obj::slot, Qt::QueuedConnection);
 // 或
 QTimer::singleShot(0, obj, [obj]{ obj->slot(); });
+```
+
+示例：危险的“跨线程 Direct”写法（应避免）。
+
+```cpp
+QThread th;
+Worker w;
+w.moveToThread(&th);
+th.start();
+
+// 槽会在 sender 所在线程里执行，而 w 归属 th 线程
+// => 跨线程 Direct，可能越线程访问 w 的状态/成员
+QObject::connect(&sender, &Sender::sig, &w, &Worker::slot, Qt::DirectConnection);
+
+// 正确写法：使用 Auto/Queued，或把重活放入 Worker，通过信号回到 UI
 ```
