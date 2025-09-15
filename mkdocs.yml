@@ -35,6 +35,7 @@ nav:
       - "Qt 连接类型详解": qt/connection_types.md
       - "跨线程更新 UI 的安全方式？": qt/cross_thread_ui_update.md
       - "信号槽常见坑与最佳实践": qt/pitfalls_best_practices.md
+      - "QThread 正确使用姿势与常见误区": qt/qthread_usage.md
 
 extra_css:
   - stylesheets/extra.css
