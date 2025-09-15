@@ -31,6 +31,7 @@ nav:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
   - Qt:
+      - "概览": qt/index.md
       - "Qt 信号槽机制与连接类型？": qt/signals_and_slots.md
       - "跨线程更新 UI 的安全方式？": qt/cross_thread_ui_update.md
 
