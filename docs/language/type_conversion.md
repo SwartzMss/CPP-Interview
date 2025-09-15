@@ -29,6 +29,8 @@ tags:
 3. 仅改限定符用 `const_cast`。
 4. `reinterpret_cast` 只在底层需求且明确后果时使用。
 
+> 相关阅读：关于禁止隐式转换与条件 `explicit` 的用法与陷阱，见「[explicit 关键字的作用](explicit.md)」。
+
 ## 代码模式记忆卡
 
 ```cpp
