@@ -36,6 +36,9 @@ nav:
       - "跨线程更新 UI 的安全方式？": qt/cross_thread_ui_update.md
       - "信号槽常见坑与最佳实践": qt/pitfalls_best_practices.md
       - "QThread 正确使用姿势与常见误区": qt/qthread_usage.md
+      - "QThread 和线程池如何选择？": qt/when_use_qthread_vs_threadpool.md
+      - "为何不把业务放进 QThread 子类？": qt/why_not_put_business_in_qthread.md
+      - "如何安全地停止线程任务？": qt/how_to_stop_thread_safely.md
 
 extra_css:
   - stylesheets/extra.css

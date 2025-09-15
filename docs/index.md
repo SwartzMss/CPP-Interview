@@ -12,3 +12,6 @@ title: CPP-Interview
 - 《[跨线程更新 UI 的安全方式？](qt/cross_thread_ui_update.md)》：Queued/invokeMethod/singleShot、QThread+Worker、QtConcurrent/QFutureWatcher
 - 《[信号槽常见坑与最佳实践](qt/pitfalls_best_practices.md)》：易错点与修正、死锁规避、参数注册、重复连接等
 - 《[QThread 正确使用姿势与常见误区](qt/qthread_usage.md)》：Worker+moveToThread 模板、事件循环与亲和性、取消与收尾、何时继承 QThread
+ - 《[QThread 和线程池如何选择？](qt/when_use_qthread_vs_threadpool.md)》：一次性短任务/CPU 密集用线程池，事件驱动/长期驻留用 QThread+Worker
+ - 《[为何不把业务放进 QThread 子类？](qt/why_not_put_business_in_qthread.md)》：线程亲和性与事件模型原因、推荐 Worker+moveToThread
+ - 《[如何安全地停止线程任务？](qt/how_to_stop_thread_safely.md)》：协作式取消、可中断等待、资源回收与 UI 善后
