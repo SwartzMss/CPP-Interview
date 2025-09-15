@@ -32,6 +32,7 @@ nav:
       - "explicit 关键字的作用？": language/explicit.md
   - Qt:
       - "Qt 信号槽机制与连接类型？": qt/signals_and_slots.md
+      - "跨线程更新 UI 的安全方式？": qt/cross_thread_ui_update.md
 
 extra_css:
   - stylesheets/extra.css
