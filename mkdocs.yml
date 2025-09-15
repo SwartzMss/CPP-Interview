@@ -31,9 +31,10 @@ nav:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
   - Qt:
-      - "概览": qt/index.md
-      - "Qt 信号槽机制与连接类型？": qt/signals_and_slots.md
+      - "Qt 信号槽机制（原理与语法）": qt/signals_and_slots.md
+      - "Qt 连接类型详解": qt/connection_types.md
       - "跨线程更新 UI 的安全方式？": qt/cross_thread_ui_update.md
+      - "信号槽常见坑与最佳实践": qt/pitfalls_best_practices.md
 
 extra_css:
   - stylesheets/extra.css

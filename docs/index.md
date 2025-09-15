@@ -7,9 +7,7 @@ title: CPP-Interview
 
 ## Qt 专栏（新）
 
-- 《[Qt 信号槽机制与连接类型？](qt/signals_and_slots.md)》：
-  - 连接类型 Auto/Direct/Queued/BlockingQueued，UniqueConnection
-  - Direct 在“发射线程”执行，警惕跨线程 Direct 风险与替代方案
-- 《[跨线程更新 UI 的安全方式？](qt/cross_thread_ui_update.md)》：
-  - 使用 Queued/invokeMethod/singleShot/QtConcurrent 等切回 GUI 线程
-  - QThread + Worker 架构、QFutureWatcher 示例、避免死锁与卡顿
+- 《[Qt 信号槽机制（原理与语法）](qt/signals_and_slots.md)》：moc/activate、新语法、上下文与断连、重载处理
+- 《[Qt 连接类型详解](qt/connection_types.md)》：Auto/Direct/Queued/BlockingQueued/Unique、跨线程 Direct 风险与选型
+- 《[跨线程更新 UI 的安全方式？](qt/cross_thread_ui_update.md)》：Queued/invokeMethod/singleShot、QThread+Worker、QtConcurrent/QFutureWatcher
+- 《[信号槽常见坑与最佳实践](qt/pitfalls_best_practices.md)》：易错点与修正、死锁规避、参数注册、重复连接等
