@@ -30,6 +30,8 @@ nav:
   - 特性:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
+  - Qt:
+      - "Qt 信号槽机制与连接类型？": qt/signals_and_slots.md
 
 extra_css:
   - stylesheets/extra.css
