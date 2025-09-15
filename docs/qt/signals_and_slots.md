@@ -117,3 +117,42 @@ int main(int argc, char** argv) {
 
 —— 熟悉线程亲和性（`QObject::thread()`）、事件循环与参数类型要求，是正确选用连接类型的关键。
 
+### 6) 重负载槽与 Direct 的替代方案
+
+问题：重负载槽使用 Direct 会让槽在发射处同步执行，若发射方是 UI 线程，界面会卡顿；跨线程 Direct 还可能越线程操作接收者，带来安全风险。
+
+修正：
+
+- 把重活放到工作线程（`QThread + Worker`），用信号把结果发回 UI。
+- 对“可能很重”的槽，显式使用 `Qt::QueuedConnection`，避免在发射线程阻塞。
+- 仅把轻量 UI 更新留在 GUI 线程；必要时用 `QMetaObject::invokeMethod(..., Qt::QueuedConnection)` 或 `QTimer::singleShot(0, ...)` 切回。
+- 需要等待结果再考虑 `Qt::BlockingQueuedConnection`，但要严格避免同线程和死锁。
+
+示例：重活在 Worker，结果回 UI。
+
+```cpp
+class Worker : public QObject {
+    Q_OBJECT
+signals:
+    void done(QString r);
+public slots:
+    void doWork(Input in) { /* heavy */ emit done("ok"); }
+};
+
+QThread th; auto w = new Worker; w->moveToThread(&th); th.start();
+
+// 发给 Worker：跨线程 Auto => Queued（异步，不阻塞 UI）
+QObject::connect(&sender, &Sender::start, w, &Worker::doWork);
+
+// 回到 UI：同线程 => Direct（快且安全），或显式 Queued 亦可
+QObject::connect(w, &Worker::done, ui, [ui](const QString& r){ ui->setText(r); });
+```
+
+同线程但要避免长阻塞：
+
+```cpp
+// 把执行切片，排队到稍后执行
+QObject::connect(obj, &Obj::sig, obj, &Obj::slot, Qt::QueuedConnection);
+// 或：
+QTimer::singleShot(0, obj, [obj]{ obj->slot(); });
+```
