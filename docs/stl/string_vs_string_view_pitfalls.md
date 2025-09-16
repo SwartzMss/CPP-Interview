@@ -4,6 +4,18 @@ tags:
   - stl
 ---
 
+## 标准与兼容性
+
+- 引入版本：C++17（头文件 `<string_view>`，类型 `std::string_view`）。
+- 实验性前身：C++14 Library Fundamentals TS（2015）的 `std::experimental::string_view`。
+- 编译器支持：主流编译器自 2017 年起均已支持；旧代码中若见 `std::experimental::string_view`，升级到 C++17+ 可直接替换为标准版。
+- 字面量后缀：`"abc"sv` 在命名空间 `std::literals::string_view_literals` 中，示例：
+  
+  ```cpp
+  using namespace std::literals::string_view_literals;
+  std::string_view sv = "hello"sv;
+  ```
+
 ## 结论（安全用法）
 
 - 只读入参：优先用 `std::string_view`（不持久化，不越过调用栈）。
@@ -118,4 +130,3 @@ struct SvEq {
 - `string_view::substr()` 若 `pos > size()` 会抛 `std::out_of_range`；`string::substr()` 也会，留意边界。
 - 想要“廉价前缀/后缀去除”优先用 `remove_prefix/remove_suffix`，零拷贝。
 - 需要线程安全的长期保存，务必拷贝成 `std::string`。
-
