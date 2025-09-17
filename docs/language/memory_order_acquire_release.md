@@ -4,7 +4,7 @@ tags:
   - language
 ---
 
-# `std::memory_order_release / acquire` 的使用场景（仅 C++ 多线程）
+# `std::memory_order_release / acquire` 的使用场景
 
 ## 核心结论
 
@@ -156,4 +156,3 @@ int main() {
 - 需要从写线程“带出”其他普通写入：`store(release)` + `load(acquire)` 成对使用。
 - 只统计不依赖其他数据可见性：`relaxed`。
 - 复杂同步别硬凹内存序：用锁或保持 `seq_cst`。
-
