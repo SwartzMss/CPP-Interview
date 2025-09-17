@@ -1,5 +1,5 @@
 ---
-title: make_shared 和 shared_ptr(new T) 的区别？
+title: make_shared 和 shared_ptr 的区别？
 tags:
   - stl
 ---
@@ -72,4 +72,3 @@ int main() {
 ### 5. 面试总结
 
 `make_shared` 将控制块与对象合并分配，性能好且异常安全；`new + shared_ptr` 支持自定义删除器，并能在大对象场景下更早释放对象内存。常规场景首选 `make_shared`，有特殊资源管理或内存占用时机需求时再选 `new + shared_ptr`（或 `allocate_shared`）。
-

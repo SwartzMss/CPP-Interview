@@ -1,5 +1,5 @@
 ---
-title: QThread 和线程池（QtConcurrent/QThreadPool）如何选择？
+title: QThread 和线程池如何选择？
 tags:
   - qt
 ---
@@ -47,4 +47,3 @@ th.start();
 - 《[QThread 正确使用姿势与常见误区](qthread_usage.md)》
 - 《[跨线程更新 UI 的安全方式？](cross_thread_ui_update.md)》
 - 《[Qt 连接类型详解](connection_types.md)》
-

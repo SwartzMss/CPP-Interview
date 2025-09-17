@@ -1,5 +1,5 @@
 ---
-title: Qt 信号槽机制（原理与语法）
+title: Qt 信号槽机制
 tags:
   - qt
 ---

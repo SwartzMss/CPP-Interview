@@ -1,5 +1,5 @@
 ---
-title: Qt 连接类型详解（Auto/Direct/Queued/BlockingQueued/Unique）
+title: Qt 连接类型详解
 tags:
   - qt
 ---
@@ -65,4 +65,3 @@ QObject::connect(&sender, &Sender::sig, &w, &Worker::slot, Qt::BlockingQueuedCon
 - 机制与语法：参见《[Qt 信号槽机制（原理与语法）](signals_and_slots.md)》
 - 跨线程 UI 安全更新：参见《[跨线程更新 UI 的安全方式？](cross_thread_ui_update.md)》
 - 坑位清单：参见《[信号槽常见坑与最佳实践](pitfalls_best_practices.md)》
-
