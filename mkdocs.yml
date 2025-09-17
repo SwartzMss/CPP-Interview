@@ -33,6 +33,7 @@ nav:
   - 特性:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
+      - "std::memory_order_release / acquire 的使用场景？": language/memory_order_acquire_release.md
   - Qt:
       - "Qt 信号槽机制（原理与语法）": qt/signals_and_slots.md
       - "Qt 连接类型详解": qt/connection_types.md
