@@ -53,9 +53,10 @@ __Lambda lam{.a = a};
 
 - `std::function<R(Args...)>` 通过类型擦除存放任意可调用对象（函数指针、lambda、仿函数、`bind` 结果等）。
 - 代价：可能发生堆分配（小对象优化依赖实现），调用有间接开销；目标需可复制（C++23 起可用 `std::move_only_function` 支持仅移动）。
-- 建议：
-  - 函数模板/成员模板参数使用“泛型可调用”：`template<class F> void run(F f);` 或 `auto` 形参（C++20）。
-  - 仅当需要类型擦除（跨模块存储、容器、虚接口替代）时再用 `std::function`。
+
+建议：
+- 函数模板/成员模板参数使用“泛型可调用”：`template<class F> void run(F f);` 或 `auto` 形参（C++20）。
+- 仅当需要类型擦除（跨模块存储、容器、虚接口替代）时再用 `std::function`。
 
 示例：
 
@@ -106,4 +107,3 @@ int r = f();        // r = 42
 - 无捕获可转函数指针；有捕获是“匿名类”。
 - `std::function` 为类型擦除容器，有成本；C++23 有 `move_only_function`。
 - `mutable` 仅改内部副本，不回写外部。
-
