@@ -96,3 +96,6 @@ private:
 - `cv.wait(lock, pred)` 等价于 while+wait，抗虚假唤醒。
 - 改状态在锁内完成，先改后通知，避免丢唤醒。
 
+延伸阅读：
+
+- 惊群问题与避免策略（条件变量/IO）：language/thundering_herd.md

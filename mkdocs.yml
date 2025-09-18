@@ -38,6 +38,7 @@ nav:
       - "std::memory_order_release / acquire 的使用场景？": language/memory_order_acquire_release.md
       - "Lambda 常见考点总结": language/lambda_interview_summary.md
       - "条件变量使用规范（单等待者/点对点）": language/condition_variable_single_waiter.md
+      - "惊群问题与避免策略（条件变量/IO）": language/thundering_herd.md
   - 性能&调试:
       - "C++ 零拷贝详解与示例": perf/zero_copy.md
   - Qt:
