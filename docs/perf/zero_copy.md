@@ -11,27 +11,35 @@ tags:
 
 - “零拷贝”旨在在应用与设备/内核间传输数据时尽量避免多余的内存复制与上下文切换，降低 CPU 与缓存带宽占用，提高吞吐并降低延迟。
 - 常见边界：
-  - 进程内零拷贝：组件之间仅传“视图/引用”，不复制底层缓冲。
-  - 进程间/文件：多个进程共享同一物理页（`mmap`/共享内存）。
-  - 内核 I/O：用页映射/引用传递/DMA，避免“用户态←→内核态”的重复拷贝。
+
+    - 进程内零拷贝：组件之间仅传“视图/引用”，不复制底层缓冲。
+    - 进程间/文件：多个进程共享同一物理页（`mmap`/共享内存）。
+    - 内核 I/O：用页映射/引用传递/DMA，避免“用户态←→内核态”的重复拷贝。
 - 实务上常是“少拷贝”，而非绝对零。目标是减少不必要复制与系统调用。
 
 ## 常见手段与场景
 
 - 进程内
-  - `std::string_view`/`std::span`：只传视图不复制；必须保证被引用缓冲生命周期足够长。
-  - 移动语义 `std::move`：转移所有权避免复制（不跨内核边界）。
-  - 引用计数缓冲：`std::shared_ptr<uint8_t[]>` 或自定义 buffer pool，降低复制与分配成本。
+
+    - `std::string_view`/`std::span`：只传视图不复制；必须保证被引用缓冲生命周期足够长。
+    - 移动语义 `std::move`：转移所有权避免复制（不跨内核边界）。
+    - 引用计数缓冲：`std::shared_ptr<uint8_t[]>` 或自定义 buffer pool，降低复制与分配成本。
+
 - 进程间/文件
-  - `mmap` 文件或共享内存（`shm_open`/`memfd_create`）：多进程共享页，避免 read 复制到用户态。
+
+    - `mmap` 文件或共享内存（`shm_open`/`memfd_create`）：多进程共享页，避免 read 复制到用户态。
+
 - 网络/内核 I/O（Linux）
-  - `sendfile(out_sock, in_fd, ...)`：文件→套接字零拷贝（页缓存→NIC DMA）。
-  - `splice`/`tee`/`vmsplice`：在 fd 间移动页引用（管道/套接字/文件）。
-  - `readv`/`writev`：分散/聚集 I/O，减少系统调用次数（仍可能一次内核复制）。
-  - `MSG_ZEROCOPY`（`SO_ZEROCOPY` + `sendmsg`）：大报文由 DMA 直接从用户页发送，内核通过错误队列通知完成；适合大吞吐发送。
-  - `io_uring`：注册固定缓冲与部分 `*_ZC` 操作，进一步减少拷贝与系统调用。
+
+    - `sendfile(out_sock, in_fd, ...)`：文件→套接字零拷贝（页缓存→NIC DMA）。
+    - `splice`/`tee`/`vmsplice`：在 fd 间移动页引用（管道/套接字/文件）。
+    - `readv`/`writev`：分散/聚集 I/O，减少系统调用次数（仍可能一次内核复制）。
+    - `MSG_ZEROCOPY`（`SO_ZEROCOPY` + `sendmsg`）：大报文由 DMA 直接从用户页发送，内核通过错误队列通知完成；适合大吞吐发送。
+    - `io_uring`：注册固定缓冲与部分 `*_ZC` 操作，进一步减少拷贝与系统调用。
+
 - 高性能用户态栈（延伸）
-  - DPDK、SPDK；RDMA/verbs、AF_XDP；Folly `IOBuf`、Cap’n Proto（in‑place）。
+
+    - DPDK、SPDK；RDMA/verbs、AF_XDP；Folly `IOBuf`、Cap’n Proto（in‑place）。
 
 ## 代码示例
 
@@ -225,15 +233,20 @@ io_uring_queue_exit(&ring);
 ## 性能与调试
 
 - 度量指标
-  - CPU 使用（系统态 vs 用户态）、每核吞吐（Gbps / Mbps）、P99/P999 延迟。
-  - socket 层统计：发送队列长度、重传、`tcp_info`（`getsockopt(TCP_INFO)`）。
-  - 零拷贝命中率：`MSG_ERRQUEUE` 完成数 / 发送数；sendfile/splice 成功返回与回退路径统计。
+
+    - CPU 使用（系统态 vs 用户态）、每核吞吐（Gbps / Mbps）、P99/P999 延迟。
+    - socket 层统计：发送队列长度、重传、`tcp_info`（`getsockopt(TCP_INFO)`）。
+    - 零拷贝命中率：`MSG_ERRQUEUE` 完成数 / 发送数；sendfile/splice 成功返回与回退路径统计。
+
 - 观察工具
-  - `perf record/report`：采样热点、系统调用与 cache-miss。
-  - `perf trace`/`strace -k`：跟踪 syscalls 与阻塞点。
-  - `bpftool`/`bcc`：kprobe/tracepoint 观测 TCP、`sendfile`、`splice` 路径。
-  - `sar`/`iostat`/`vmstat`：磁盘/CPU/内存总体压力。
+
+    - `perf record/report`：采样热点、系统调用与 cache-miss。
+    - `perf trace`/`strace -k`：跟踪 syscalls 与阻塞点。
+    - `bpftool`/`bcc`：kprobe/tracepoint 观测 TCP、`sendfile`、`splice` 路径。
+    - `sar`/`iostat`/`vmstat`：磁盘/CPU/内存总体压力。
+
 - 常见定位思路
-  - 吞吐不升：检查是否命中零拷贝（错误队列回执/统计）、是否被小包化/合并阻碍（Nagle、GSO/TSO）。
-  - 延迟变差：检查页缺页/缺乏对齐、NUMA 远端访问、pin 过多导致回收压力。
-  - CPU 居高：确认是否仍在用户态做 memcpy，或存在过多 syscalls（考虑聚合 I/O）。
+
+    - 吞吐不升：检查是否命中零拷贝（错误队列回执/统计）、是否被小包化/合并阻碍（Nagle、GSO/TSO）。
+    - 延迟变差：检查页缺页/缺乏对齐、NUMA 远端访问、pin 过多导致回收压力。
+    - CPU 居高：确认是否仍在用户态做 memcpy，或存在过多 syscalls（考虑聚合 I/O）。
