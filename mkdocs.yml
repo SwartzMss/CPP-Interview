@@ -34,6 +34,7 @@ nav:
   - 特性:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
+      - "std::move 与 std::forward 的区别？": language/move_vs_forward.md
       - "std::memory_order_release / acquire 的使用场景？": language/memory_order_acquire_release.md
       - "Lambda 常见考点总结": language/lambda_interview_summary.md
   - 性能&调试:
