@@ -30,6 +30,7 @@ nav:
       - "std::string 与 std::string_view 的常见坑": stl/string_vs_string_view_pitfalls.md
   - 面向对象:
       - "如何设计一个只能在堆上创建对象的类？": oop/heap_only_class.md
+      - "为什么析构函数必须是虚函数？": oop/virtual_destructor.md
   - 特性:
       - "C++ 四种类型转换？": language/type_conversion.md
       - "explicit 关键字的作用？": language/explicit.md
