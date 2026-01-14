@@ -41,6 +41,11 @@ nav:
       - "惊群问题与避免策略（条件变量/IO）": language/thundering_herd.md
   - 网络 (TCP/IP):
       - "TCP 三次握手 / 四次挥手基础问答": network/tcp_handshake_teardown_basics.md
+      - "TCP 握手状态问答": network/tcp_handshake_states.md
+      - "TCP 挥手状态问答": network/tcp_teardown_states.md
+      - "TIME_WAIT 深度题（高频重点）": network/tcp_time_wait.md
+      - "CLOSE_WAIT 深度题（线上事故高频）": network/tcp_close_wait.md
+      - "工程实践": network/tcp_practical_shutdown.md
   - 性能&调试:
       - "epoll vs select：性能要点与示例": perf/epoll_vs_select.md
       - "C++ 零拷贝详解与示例": perf/zero_copy.md
