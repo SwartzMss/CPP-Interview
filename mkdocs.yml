@@ -47,6 +47,8 @@ nav:
       - "CLOSE_WAIT 深度题（线上事故高频）": network/tcp_close_wait.md
       - "工程实践": network/tcp_practical_shutdown.md
       - "IP 分片问答": network/ip_fragmentation.md
+      - "QUIC 基础问答": network/quic_basics.md
+      - "TLV 设计问答": network/tlv.md
   - 性能&调试:
       - "epoll vs select：性能要点与示例": perf/epoll_vs_select.md
       - "C++ 零拷贝详解与示例": perf/zero_copy.md
