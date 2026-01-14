@@ -50,6 +50,7 @@ nav:
       - "QUIC 基础问答": network/quic_basics.md
       - "TLV 设计问答": network/tlv.md
       - "长连接 vs 短连接": network/long_vs_short_connections.md
+      - "QoS 面试要点": network/qos.md
   - 性能&调试:
       - "epoll vs select：性能要点与示例": perf/epoll_vs_select.md
       - "C++ 零拷贝详解与示例": perf/zero_copy.md
