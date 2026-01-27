@@ -64,6 +64,9 @@ nav:
       - "QtConcurrent 和 QThreadPool 的区别？": qt/qtconcurrent_vs_qthreadpool.md
       - "为何不把业务放进 QThread 子类？": qt/why_not_put_business_in_qthread.md
       - "如何安全地停止线程任务？": qt/how_to_stop_thread_safely.md
+  - Linxu系统:
+      - "Linux 系统面试速览": linux/index.md
+      - "高并发服务写路径（write → flush → writeback → fsync）时序": linux/write_flush_writeback_fsync.md
 
 extra_css:
   - stylesheets/extra.css
