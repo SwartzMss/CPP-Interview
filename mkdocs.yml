@@ -65,6 +65,7 @@ nav:
       - "为何不把业务放进 QThread 子类？": qt/why_not_put_business_in_qthread.md
       - "如何安全地停止线程任务？": qt/how_to_stop_thread_safely.md
   - Linux系统:
+      - "NUMA 基础与调优要点": linux/numa_basics.md
       - "高并发服务写路径（write → flush → writeback → fsync）时序": linux/write_flush_writeback_fsync.md
 
 extra_css:
