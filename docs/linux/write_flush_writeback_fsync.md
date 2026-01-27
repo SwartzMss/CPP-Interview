@@ -85,3 +85,60 @@ tags:
 ## 五、30 秒口述画图版
 
 写路径是 write 把数据写入 page cache 并标记为脏页，flush 只是把用户缓冲推进到内核，不提供持久性保证。真正的写盘在 writeback，由内核异步完成。fsync 是同步点，会等待相关脏页和元数据落盘并刷新设备缓存，fsync 返回才算持久化。高并发服务要控制 writeback 与 fsync 频率，避免业务线程被拖入慢路径。
+
+## 六、如何定位类似问题（实战版）
+
+### 先背一张总览判断表
+
+| 现象 | 第一怀疑 |
+| --- | --- |
+| RT 飙升、QPS 掉、CPU 不高 | IO / writeback |
+| load 高但 CPU idle | D 状态（IO wait） |
+| write()/fsync() 偶发卡死 | writeback 或 block IO |
+| 日志/落盘多时服务抖 | fsync 频繁 |
+| 内存充足但系统慢 | page cache / dirty page |
+
+### 第一步：确认是不是 IO / writeback
+
+1) `vmstat 1` —— 首选  
+关注 `b`（D 状态线程）、`wa`（IO 等待）、`bo`（写 IO）。  
+结论模版：`b>0 且 wa 上升` → IO 阻塞，而非 CPU。
+
+2) `iostat -x 1` —— 看磁盘瓶颈  
+关注 `%util`（占满度）、`await`（延迟 ms）、`avgqu-sz`（队列深度）。  
+特征：`%util≈100% + await 飙升` → writeback/fsync 放大尾延迟。
+
+### 第二步：确认脏页 / writeback 是否失控
+
+3) `/proc/meminfo`  
+`Dirty` 大：写得快；`Writeback` 跟不上：刷得慢；两者都高：危险。
+
+4) `/proc/vmstat`  
+看 `nr_dirty`、`nr_writeback`、`pgwriteback`、`pgwriteback_throttled`。出现 throttled 基本实锤 writeback 在拖慢写线程。
+
+5) `cat /proc/pressure/io`（PSI）  
+`some/full` 的 `avg10/60/300`。`full` 抬头 → 系统整体被 IO 卡住。
+
+### 第三步：是不是 fsync 在害你？
+
+6) `strace -p <pid> -T -e trace=fsync,fdatasync`  
+看到 fsync 频繁且每次几十 ms → fsync 放大 RT。
+
+7) `perf top`（高阶）  
+关键符号：`blk_mq_*`、`submit_bio`、`ext4_writepages`、`balance_dirty_pages`。出现 `balance_dirty_pages` ≈ writeback throttling。
+
+### 第四步：线程是否被拖进 D 状态
+
+8) `ps -eo pid,stat,comm | grep D` 或 `top`  
+业务线程大量 D 态 → 内核 IO 阻塞，而非业务逻辑慢。
+
+### 快速判断口诀
+
+- RT 抖 + fsync 慢 → fsync 问题  
+- RT 抖 + write 慢 + D 状态 → writeback 问题  
+- flush 多 fsync 少 → 可能丢数据但不一定慢  
+- `bo` 高 + `Dirty` 高 → writeback 在追赶
+
+### 面试话术（完整定位路径示例）
+
+我会先用 vmstat 和 iostat 判断是否 IO 阻塞；再看 meminfo/vmstat 的 dirty 与 writeback 是否失控；结合 PSI 的 IO 压力确认系统层面是否被拖慢。如果怀疑 fsync，就用 strace/perf 看 fsync 频率和耗时，并核对 D 状态线程数，最终把 RT 抖动和具体 IO 机制对应起来。
