@@ -16,13 +16,57 @@ tags:
 - 多级指针解引用：`*pp == p`，`**pp` 得到底层对象值。
 - 返回局部变量地址属于未定义行为（栈内存已失效）。
 
-## 示例
+## 示例代码
 
 ```c
-void foo(int a[]) {
-    printf("%zu\n", sizeof(a)); // 8
-}
+// 1) 数组名 vs 指针自增
+int a[10];
+int *p = a;
++p;        // ✅ 合法，p 指向 a[1]
+// ++a;    // ❌ 编译错误：lvalue required
+```
 
-int x = 10; int *p = &x; int **pp = &p;
-printf("%d %d\n", *p, **pp); // 10 10
+```c
+// 2) 形参数组退化为指针
+void foo(int a[]) {
+    printf("%zu\n", sizeof(a)); // 输出 8（64-bit 指针大小）
+}
+```
+
+```c
+// 3) 二维数组传参必须给出列数
+void bar(int a[][4]);     // ✅
+// void bar(int a[][]);   // ❌ 编译错误：必须指定列
+```
+
+```c
+// 4) 野指针/悬空指针
+int *p_uninit;           // 未初始化
+// *p_uninit = 10;       // ❌ 未定义行为，可能崩溃
+
+int *q = malloc(sizeof(int));
+free(q);
+// *q = 10;             // ❌ 悬空指针，未定义行为
+```
+
+```c
+// 5) 指针算术按元素跨度
+int b[5] = {0};
+int *r = b;
+r++;                    // r 前进 sizeof(int)
+printf("%p %p\n", (void*)b, (void*)r);
+```
+
+```c
+// 6) 多级指针
+int x = 10; int *p1 = &x; int **pp = &p1;
+printf("%d %d\n", *p1, **pp); // 10 10
+```
+
+```c
+// 7) 返回局部变量地址（示例说明问题）
+int* bad() {
+    int t = 42;
+    return &t;   // ❌ 返回栈内存地址，调用者使用是未定义行为
+}
 ```
