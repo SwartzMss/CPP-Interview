@@ -64,6 +64,11 @@ nav:
       - "QtConcurrent 和 QThreadPool 的区别？": qt/qtconcurrent_vs_qthreadpool.md
       - "为何不把业务放进 QThread 子类？": qt/why_not_put_business_in_qthread.md
       - "如何安全地停止线程任务？": qt/how_to_stop_thread_safely.md
+  - C基础:
+      - "C 语言基础速览": c_basics/fundamentals.md
+      - "数组与指针高频陷阱": c_basics/arrays_pointers.md
+      - "结构体与联合体要点": c_basics/structs_unions.md
+      - "嵌入式常见陷阱": c_basics/engineering_pitfalls.md
   - Linux系统:
       - "NUMA 基础与调优要点": linux/numa_basics.md
       - "高并发服务写路径（write → flush → writeback → fsync）时序": linux/write_flush_writeback_fsync.md
